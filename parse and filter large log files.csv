@@ -1,0 +1,9 @@
+Get-Content -Path "C:\Logs\application.log" | Select-String -Pattern "ERROR"
+C:\Logs\application.log:42:Error: Failed to connect to database
+C:\Logs\application.log:87:ERROR: Invalid user credentials
+C:\Logs\application.log:132:warning: some error occurred
+Get-Content -Path "C:\Logs\application.log" |
+Where-Object { $_ -match "ERROR" }
+Error: Failed to connect to database
+ERROR: Invalid user credentials
+warning: error occurred

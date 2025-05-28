@@ -1,0 +1,23 @@
+Get-ChildItem -Path "C:\day5" -File
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----       2025-04-01   9:00 AM           1234 document.pdf
+-a----       2025-04-01   9:05 AM           5678 photo.jpg
+-a----       2025-04-01   9:10 AM           9101 image.png
+-a----       2025-04-01   9:15 AM          11213 notes.txt
+$files = Get-ChildItem -Path "C:\day5" -File
+$extensions = $files.Extension | Sort-Object -Unique
+
+foreach ($ext in $extensions) {
+    $folderName = $ext.TrimStart(".")
+    $folderPath = Join-Path -Path "C:\day5" -ChildPath $folderName
+
+    if (-not (Test-Path -Path $folderPath)) {
+        New-Item -ItemType Directory -Path $folderPath
+    }
+}
+foreach ($file in $files) {
+    $folderName = $file.Extension.TrimStart(".")
+    $folderPath = Join-Path -Path "C:\day5" -ChildPath $folderName
+    Move-Item -Path $file.FullName -Destination $folderPath
+}
